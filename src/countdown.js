@@ -60,12 +60,13 @@ const countdown = function(config) {
     // requestAnimationFrame(updateTime);
 
     //this does disables the countdown but does not stop the loop?
-    if (distance > 0) {
-      requestAnimationFrame(updateTime);
-    } else {
+    if (distance <= 0) {
       config.callback();
+      return;
     }
-  }
+
+    requestAnimationFrame(updateTime);
+   }
 
   updateTime();
 }
