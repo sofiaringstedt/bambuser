@@ -1,10 +1,7 @@
 const select = elem => document.querySelector(elem);
 
 const countdown = function(config) {
-  // do not understand the split here
-  //do not fully understand the reason to have config as a parameter
   const targetDate = select(config.target).getAttribute('data-date').split('-');
-  // console.log(targetDate)
   const targetDay = parseInt(targetDate[0]);
   const targetMonth = parseInt(targetDate[1]);
   const targetYear = parseInt(targetDate[2]);
@@ -20,7 +17,6 @@ const countdown = function(config) {
   }
 
   // Set the date we're counting down to
-
   // why targetMonth-1?
   const countDownDate = new Date(targetYear, targetMonth-1, targetDay, targetHour, targetMin).getTime();
   // console.log(countDownDate)
@@ -31,11 +27,8 @@ const countdown = function(config) {
   select(config.target+' .sec .label').innerHTML = config.secLabel;
 
   const updateTime = () => {
-    // console.log('updateTime')
-
     // Get todays date and time
     const now = new Date().getTime();
-
     // Find the distance between now an the count down date
     const distance = countDownDate - now;
 
@@ -57,18 +50,19 @@ const countdown = function(config) {
     //   config.callback();
     // }
     
-    // requestAnimationFrame(updateTime);
+    //this disables the countdown but does not technically stop the loop?
 
-    //this does disables the countdown but does not stop the loop?
     if (distance <= 0) {
       config.callback();
-      return;
+      cancelAnimationFrame(updateTime);
+    } else {
+      requestAnimationFrame(updateTime);
     }
 
-    requestAnimationFrame(updateTime);
    }
+   
+    updateTime()
 
-  updateTime();
 }
 
 const addZero = (x) => (x < 10 && x >= 0) ? "0"+x : x;
