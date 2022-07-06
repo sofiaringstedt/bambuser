@@ -1,14 +1,12 @@
 const select = elem => document.querySelector(elem);
 
-const countdown = function(config) {
+const countdown = (config) => {
   const targetDate = select(config.target).getAttribute('data-date').split('-');
   const targetDay = parseInt(targetDate[0]);
   const targetMonth = parseInt(targetDate[1]);
   const targetYear = parseInt(targetDate[2]);
   let targetTime = select(config.target).getAttribute('data-time');
   let targetHour, targetMin;
-
-  // why only if targetTime ?
 
   if (targetTime != null) {
     targetTime = targetTime.split(':');
@@ -17,9 +15,8 @@ const countdown = function(config) {
   }
 
   // Set the date we're counting down to
-  // why targetMonth-1?
+  // why targetMonth-1
   const countDownDate = new Date(targetYear, targetMonth-1, targetDay, targetHour, targetMin).getTime();
-  // console.log(countDownDate)
 
   select(config.target+' .day .label').innerHTML = config.dayLabel;
   select(config.target+' .hour .label').innerHTML = config.hourLabel;
@@ -33,35 +30,25 @@ const countdown = function(config) {
     const distance = countDownDate - now;
 
     // Time calculations for days, hours, minutes and seconds
-    // difference / and ∞
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    const days =  distance > 0 ? Math.floor(distance / (1000 * 60 * 60 * 24)) : 0;
+    const hours = distance > 0 ? Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)) : 0;
+    const minutes = distance > 0 ? Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)) : 0;
+    const seconds = distance > 0 ? Math.floor((distance % (1000 * 60)) / 1000) : 0;
 
-    
     select(config.target+' .day .num').innerHTML = addZero(days);
     select(config.target+' .hour .num').innerHTML = addZero(hours);
     select(config.target+' .min .num').innerHTML = addZero(minutes);
     select(config.target+' .sec .num').innerHTML = addZero(seconds);
-    
-    // If the count down gets to zero
-    // if (distance == 0) {
-    //   config.callback();
-    // }
-    
-    //this disables the countdown but does not technically stop the loop?
 
     if (distance <= 0) {
       config.callback();
-      cancelAnimationFrame(updateTime);
     } else {
       requestAnimationFrame(updateTime);
     }
-
+    
    }
-   
-    updateTime()
+
+    updateTime();
 
 }
 
