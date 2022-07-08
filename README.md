@@ -23,12 +23,12 @@ You are able to run the current project in either way below:
 ### 2. Modify the target time
 In order to test the countdown on different occasions, in the `src/index.html`, you need to update the `data-date` and `data-time` to a closer time (e.g. current time + 1 min). So you can see how the count down behaves when it reaches the target time.
 ## TODO
-  - [ ]  Make the countdown loop stop once it reaches the target time. Currently, the countdown continues with minus values. 
-  - [ ]  Make the countdown element disappear after the target time is reached.
-  - [ ]  The CTA element should show up when the countdown is done.
-  - [ ]  The default font for the landing page is set to `Neue Haas Grotesk Display`, but the font is not applied. Investigate why and provide a solution.
-  - [ ]  Center the `wrapper` element by modifying the CSS. The `wrapper` element is not fully centered (It is horizontally centered but not vertically). 
-  - [ ]  The header text must be changed to 'We Are Live!' when the countdown is done.
+  - [x]  Make the countdown loop stop once it reaches the target time. Currently, the countdown continues with minus values. 
+  - [x]  Make the countdown element disappear after the target time is reached.
+  - [x]  The CTA element should show up when the countdown is done.
+  - [x]  The default font for the landing page is set to `Neue Haas Grotesk Display`, but the font is not applied. Investigate why and provide a solution.
+  - [x]  Center the `wrapper` element by modifying the CSS. The `wrapper` element is not fully centered (It is horizontally centered but not vertically). 
+  - [x]  The header text must be changed to 'We Are Live!' when the countdown is done.
 
 ## Questions
 Once you have fixed the CTA button, you should be able to click it. On click, the Bambuser One-to-many player will be opened. When clicking a product in the player, you will see an error page. We need you to explain as much as possible in the field further down: 
@@ -38,7 +38,9 @@ Once you have fixed the CTA button, you should be able to click it. On click, th
 
 ### Answer
       Place a brief explanation here. You can explain this further during the technical interview.
-
+- The error is due to a same-origin policy setting, not allowing other origins/scripts than your own to interact with your script. So, this is happening because you are trying to navigate to another website within the <iframe>. The iframe only allows to display content from the same origin as the parent/main website.
+- There are a lot of security risks related to opening website within and the default setting is therefore set to "X-Frame-Options: SAMEORIGIN" (as seen in the error message in console). One of the biggest reasonings behind same-origin-policy is to avoid clickjacking (a user thinking they are clicking on/navigating to one website, but they are in fact directed to another one).
+- There are a lot of good reasons behind same-origin-policies, but as seen in this example it quickly becomes a bit too strict. What I would approach in order to work around the issue while keeping the security SOP provides is CORS. With CORS you can allows other origins to interact with your script. My initial idea would be to allow requests from https://demo.bambuser.shop/ and its paths.
 
 See how to reproduce the error: [Video](producing-iframe-error.mp4)
 

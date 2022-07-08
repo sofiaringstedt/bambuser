@@ -15,7 +15,6 @@ const countdown = (config) => {
   }
 
   // Set the date we're counting down to
-  // why targetMonth-1
   const countDownDate = new Date(targetYear, targetMonth-1, targetDay, targetHour, targetMin).getTime();
 
   select(config.target+' .day .label').innerHTML = config.dayLabel;
